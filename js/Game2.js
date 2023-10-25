@@ -84,7 +84,7 @@ class GamePart2 {
       }
     }
 
-    console.log(`Part 2 answer: ${this.myPoints}`)
+    // console.log(`Part 2 answer: ${this.myPoints}`)
   }
 }
 

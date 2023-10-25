@@ -74,7 +74,7 @@ class Game {
             }
           }
         }
-        console.log(`Part 1 answer: ${this.myPoints}`)
+        // console.log(`Part 1 answer: ${this.myPoints}`)
       }
     }
   
