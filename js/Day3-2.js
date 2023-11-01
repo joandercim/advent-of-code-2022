@@ -6,6 +6,7 @@ class Day3Part2 {
     this.alpabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
     this.total = 0;
     this.groupsArray = [];
+    this.commonLetters = [];
   }
 
   async init() {
@@ -15,28 +16,18 @@ class Day3Part2 {
     const backpackItems = text.split(/\r?\n/);
 
     const itemsTest = [
-      'elf one',
-      'elf two',
-      'elf three',
-      'elf four',
-      'elf five',
-      'elf six',
-      'elf seven',
-      'elf eight',
-      'elf nine',
-      'elf ten',
-      'elf eleven',
-      'elf twelve',
-      'elf thirteen',
-      'elf fourteen',
-      'elf fifteen',
+      'vJrwpWtwJgWrhcsFMMfFFhFp',
+      'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
+      'PmmdzqPrVvPwwTWBwg',
+      'wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn',
+      'ttgJtRGJQctTZtZT',
+      'CrZsJsPPZsGzwwsLwLmpwMDw',
     ];
 
     //   this.splitArrays(backpackItems);
-    this.splitGroups(itemsTest);
+    this.splitGroups(backpackItems);
 
     this.givePrio(this.matchingItems);
-    console.log(`The answer for part one is ${this.total}`);
   }
 
   async splitGroups(rucksacks) {
@@ -44,7 +35,7 @@ class Day3Part2 {
     let group = [];
     for (let i = 0; i < rucksacks.length; i++) {
       const elf = rucksacks[i];
-      if (count < 3) {
+      if (count <= 2) {
         count++;
         group.push(elf);
       } else {
@@ -54,8 +45,58 @@ class Day3Part2 {
         group.push(elf);
       }
     }
-    console.log(this.groupsArray);
-    //   console.log(this.groupsArray);
+
+    if (group.length > 0) {
+      this.groupsArray.push(group);
+    }
+
+    this.findShortest(this.groupsArray);
+  }
+
+  findShortest(groups) {
+    for (let index = 0; index < groups.length; index++) {
+      const group = groups[index];
+      let foundBadge = [];
+
+      const elfOne = group[0].split('');
+      const elfTwo = group[1].split('');
+      const elfThree = group[2].split('');
+
+      const shortestLength = Math.min(
+        elfOne.length,
+        elfTwo.length,
+        elfThree.length
+      );
+
+      if (elfOne.length === shortestLength) {
+        this.findBadge(elfOne, elfTwo, elfThree);
+      } else if (elfTwo.length === shortestLength) {
+        this.findBadge(elfTwo, elfOne, elfThree);
+      } else {
+        this.findBadge(elfThree, elfOne, elfTwo);
+      }
+    }
+    console.log(this.commonLetters)
+  }
+
+  findBadge(shortest, arr2, arr3) {
+    let common = [];
+    // Find common items in shortes and arr2
+    for (let i = 0; i < shortest.length; i++) {
+      for (let j = 0; j < arr2.length; j++) {
+        if (shortest[i] === arr2[j]) {
+          common.push(shortest[i])
+        }
+      }
+    }
+    
+    for (let i = 0; i < common.length; i++) {
+      for (let j = 0; j < arr3.length; j++) {
+        if (common[i] === arr3[j]) {
+          return this.commonLetters.push(common[i])
+        }
+      }
+    }
   }
 
   // async splitArrays(backpackItems) {

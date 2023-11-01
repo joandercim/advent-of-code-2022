@@ -16,7 +16,7 @@ class Day3 {
     this.splitArrays(backpackItems);
 
     this.givePrio(this.matchingItems);
-    console.log(`The answer is ${this.total}`);
+    // console.log(`The answer is ${this.total}`);
   }
 
   async splitArrays(backpackItems) {
